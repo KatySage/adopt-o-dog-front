@@ -1,4 +1,5 @@
 import React, { useEffect, useState }  from "react";
+import { Link } from 'react-router-dom';
 
 const DogList = (props) => {
     const [dogInfo, setDog] = useState([]);
@@ -14,10 +15,12 @@ const DogList = (props) => {
     const loadData = async (dog) => {
         const url = `https://api.thedogapi.com/v1/images/search?breed_id=${dog.breed_id}`;
         const response = await fetch(url);
-        const data = response.json();
-        console.log(data)
-        return data;
-      };
+        const data = await response.json();
+        const pic = data[0].url
+        const picSrc = JSON.stringify(pic)
+        console.log(picSrc)
+        return picSrc;
+    };
     return (
         <>
         {dogInfo.map(dog => {
@@ -26,6 +29,7 @@ const DogList = (props) => {
                     <img src={loadData(dog)} alt="" /> 
                     <p>{dog.name}</p>
                     <p>{dog.breed}</p>
+                    <Link to={`dog-profile/${dog.id}`}>Check out more about {dog.name}!</Link>
                 </li>
             )
         })}
