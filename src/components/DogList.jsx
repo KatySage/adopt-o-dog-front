@@ -1,5 +1,6 @@
 import React, { useEffect, useState }  from "react";
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import DogProfile from "./DogProfile";
 
 const DogList = (props) => {
     const [dogInfo, setDog] = useState([]);
@@ -26,13 +27,15 @@ const DogList = (props) => {
         {dogInfo.map(dog => {
             return (
                 <li key={`${dog.breed_id}`}>
-                    <img src={loadData(dog)} alt="" /> 
+                    <img src={dog.url} alt="" /> 
                     <p>{dog.name}</p>
-                    <p>{dog.breed}</p>
                     <Link to={`dog-profile/${dog.id}`}>Check out more about {dog.name}!</Link>
                 </li>
             )
         })}
+        <Route path={`/dog-profile/:dog_id`}>
+            <DogProfile dogInfo={dogInfo} />
+        </Route>
         </>
     )}
 export default DogList;
