@@ -13,28 +13,22 @@ const DogList = (props) => {
         })();
         
     }, [setDog]);
-    const loadData = async (dog) => {
-        const url = `https://api.thedogapi.com/v1/images/search?breed_id=${dog.breed_id}`;
-        const response = await fetch(url);
-        const data = await response.json();
-        const pic = data[0].url
-        const picSrc = JSON.stringify(pic)
-        console.log(picSrc)
-        return picSrc;
-    };
     return (
         <>
+        <Route exact path='/'>
         {dogInfo.map(dog => {
             return (
                 <li key={`${dog.breed_id}`}>
                     <img src={dog.url} alt="" /> 
                     <p>{dog.name}</p>
-                    <Link to={`dog-profile/${dog.id}`}>Check out more about {dog.name}!</Link>
+                    <Link to={`/dog-profile/${dog.id}`}>Check out more about {dog.name}!</Link>
                 </li>
             )
         })}
+        </Route>    
         <Route path={`/dog-profile/:dog_id`}>
             <DogProfile dogInfo={dogInfo} />
+        
         </Route>
         </>
     )}
